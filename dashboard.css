@@ -144,7 +144,7 @@ body {
 }
 
 .kpi-value.kpi-accent {
-  color: var(--accent);
+  color: var(--accent-link);
 }
 
 .kpi-value.kpi-amber {
@@ -706,7 +706,7 @@ body {
 .range-head output {
   font-size: 12px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-link);
   font-variant-numeric: tabular-nums;
 }
 

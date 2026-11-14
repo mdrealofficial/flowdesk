@@ -32,7 +32,7 @@ body {
 }
 
 #toggle-quick-add.is-active {
-  color: var(--accent);
+  color: var(--accent-link);
   background: var(--accent-soft);
   transform: rotate(45deg);
 }

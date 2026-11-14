@@ -14,6 +14,8 @@
   --accent-2: #addf2e;
   --accent-soft: #f1fcd4;
   --accent-text: #182205;
+  --accent-link: #497204;
+  --accent-link-hover: #365502;
   --green: #2f7a5c;
   --green-soft: #e6f0ea;
   --amber: #a9761b;
@@ -201,7 +203,7 @@ select {
 }
 
 .link-btn {
-  color: var(--accent);
+  color: var(--accent-link);
   font-weight: 600;
   font-size: 13px;
   padding: 2px 4px;
@@ -209,7 +211,7 @@ select {
 }
 
 .link-btn:hover {
-  color: var(--accent-2);
+  color: var(--accent-link-hover);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
