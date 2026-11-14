@@ -28,10 +28,12 @@ const els = {
   kpiStreakFoot: $('#kpi-streak-foot'),
   board: $('#board'),
   heatmap: $('#heatmap'),
+  heatmapMonths: $('#heatmap-months'),
   heatRange: $('#heat-range'),
   sideStreak: $('#side-streak'),
   sideStreakLabel: $('#side-streak-label'),
   sideWeek: $('#side-week'),
+  sideTotalPeriod: $('#side-total-period'),
   sideBest: $('#side-best'),
   search: $('#search'),
   exportBtn: $('#export-btn'),
@@ -178,6 +180,9 @@ function render() {
   els.sideStreak.textContent = String(stats.streak);
   els.sideStreakLabel.textContent = stats.streak === 1 ? 'day in streak' : 'days in streak';
   els.sideWeek.textContent = String(stats.weekTotal);
+  if (els.sideTotalPeriod) {
+    els.sideTotalPeriod.textContent = String(stats.lifetime);
+  }
   els.sideBest.textContent = String(bestDay(state.history));
 
   renderBoard();
@@ -411,12 +416,30 @@ function renderHeatmap() {
   const today = new Date();
   const todayStr = dateKey(today);
 
+  const numWeeks = 26;
   const start = new Date(today);
-  start.setDate(start.getDate() - (today.getDay() + 13 * 7));
+  start.setDate(start.getDate() - (today.getDay() + (numWeeks - 1) * 7));
   start.setHours(0, 0, 0, 0);
 
   const cells = [];
-  for (let i = 0; i < 14 * 7; i += 1) {
+  const monthLabels = [];
+  let lastMonth = -1;
+
+  for (let w = 0; w < numWeeks; w += 1) {
+    const weekStart = new Date(start);
+    weekStart.setDate(start.getDate() + w * 7);
+    const m = weekStart.getMonth();
+
+    if (m !== lastMonth) {
+      monthLabels.push({
+        text: weekStart.toLocaleDateString(undefined, { month: 'short' }),
+        col: w,
+      });
+      lastMonth = m;
+    }
+  }
+
+  for (let i = 0; i < numWeeks * 7; i += 1) {
     const day = new Date(start);
     day.setDate(start.getDate() + i);
 
@@ -427,10 +450,22 @@ function renderHeatmap() {
     const cell = document.createElement('div');
     cell.className = 'heat-cell' + (future ? ' future' : ` lvl-${levelFor(count)}`);
     if (!future) {
-      const dateLabel = day.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-      cell.title = `${dateLabel} — ${count} completed`;
+      const dateLabel = day.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      cell.title = `${dateLabel} — ${count} task${count === 1 ? '' : 's'} completed`;
     }
     cells.push(cell);
+  }
+
+  if (els.heatmapMonths) {
+    els.heatmapMonths.replaceChildren();
+    // Grid column width is 13px + 3px gap = 16px
+    for (const item of monthLabels) {
+      const span = document.createElement('span');
+      span.textContent = item.text;
+      span.style.position = 'absolute';
+      span.style.left = `${item.col * 16}px`;
+      els.heatmapMonths.append(span);
+    }
   }
 
   els.heatmap.replaceChildren(...cells);

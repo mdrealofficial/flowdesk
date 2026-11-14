@@ -100,7 +100,7 @@
         <div class="section-head">
           <div>
             <h2>Consistency</h2>
-            <p>Daily completed tasks over the last 14 weeks.</p>
+            <p>Daily completed tasks over the last 26 weeks.</p>
           </div>
           <div class="legend" aria-hidden="true">
             <span>Less</span>
@@ -111,7 +111,15 @@
 
         <div class="consistency-body">
           <div class="heatmap-wrap">
-            <div class="heatmap" id="heatmap"></div>
+            <div class="heatmap-months" id="heatmap-months"></div>
+            <div class="heatmap-grid-container">
+              <div class="heatmap-days" aria-hidden="true">
+                <span>Mon</span>
+                <span>Wed</span>
+                <span>Fri</span>
+              </div>
+              <div class="heatmap" id="heatmap"></div>
+            </div>
             <div class="heat-scale" id="heat-range"></div>
           </div>
 
@@ -123,6 +131,10 @@
             <div class="side-stat">
               <span class="side-value" id="side-week">0</span>
               <span class="side-label">completed · 7 days</span>
+            </div>
+            <div class="side-stat">
+              <span class="side-value" id="side-total-period">0</span>
+              <span class="side-label">completed · 26 weeks</span>
             </div>
             <div class="side-stat">
               <span class="side-value" id="side-best">0</span>
