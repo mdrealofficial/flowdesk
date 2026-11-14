@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Support — FlowDesk</title>
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0c0d0e;
+        --surface: #141618;
+        --surface-border: #22252a;
+        --accent: #c3f53c;
+        --text: #f3f4f6;
+        --text-muted: #9ca3af;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--surface-border);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      .brand img {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+      }
+
+      .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 14px;
+        margin-left: 20px;
+      }
+
+      .nav-links a:hover {
+        color: #fff;
+      }
+
+      .content {
+        padding: 60px 0 80px;
+      }
+
+      h1 {
+        font-size: 38px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+      }
+
+      p {
+        margin-bottom: 18px;
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+
+      .support-card {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: 14px;
+        padding: 30px;
+        margin: 28px 0;
+      }
+
+      .support-card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+
+      .email-link {
+        display: inline-block;
+        color: var(--accent);
+        font-size: 17px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 6px;
+      }
+
+      .email-link:hover {
+        text-decoration: underline;
+      }
+
+      .faq-item {
+        margin-bottom: 24px;
+      }
+
+      .faq-item h4 {
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      footer {
+        border-top: 1px solid var(--surface-border);
+        padding: 32px 0;
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      footer a {
+        color: var(--text-muted);
+        text-decoration: underline;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="index.html" class="brand">
+          <img src="icon.png" alt="FlowDesk Icon" />
+          <span>FlowDesk</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">← Back to Home</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+      </nav>
+
+      <div class="content">
+        <h1>FlowDesk Support</h1>
+        <p>
+          Need help with FlowDesk, have a feature request, or want to report an issue? We're here to help.
+        </p>
+
+        <div class="support-card">
+          <h3>Contact Developer Support</h3>
+          <p>
+            For assistance, troubleshooting, or general questions, send an email to:
+          </p>
+          <a href="mailto:support@smecube.com" class="email-link">support@smecube.com</a>
+        </div>
+
+        <h2 style="font-size: 22px; margin: 40px 0 20px;">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h4>Where is my task data stored?</h4>
+          <p>All data is stored directly in your browser using Chrome's local storage API. Nothing is sent to any remote servers.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>How do I back up my tasks?</h4>
+          <p>Open the FlowDesk dashboard and click the <strong>Export</strong> button in the top navigation bar. It will download a complete JSON backup file.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>How do recurring tasks work?</h4>
+          <p>When you mark a repeating task as Done, FlowDesk automatically creates the next occurrence in your Backlog with an updated future due date.</p>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; 2026 FlowDesk. All rights reserved. <a href="index.html">Home</a> <a href="privacy.html">Privacy Policy</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
