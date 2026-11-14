@@ -11,6 +11,8 @@ import {
   formatDue,
   levelFor,
   dateKey,
+  appConfirm,
+  appAlert,
   PRIORITY_LABEL,
   REPEAT_LABEL,
 } from './lib/store.js';
@@ -144,16 +146,20 @@ async function onImport(event) {
     if (!data || (!Array.isArray(data.tasks) && typeof data.history !== 'object')) {
       throw new Error('Invalid FlowDesk backup file format.');
     }
-    const confirmed = confirm(
-      `Import ${data.tasks ? data.tasks.length : 0} tasks and history into FlowDesk? This will replace your current workspace.`
-    );
+    const confirmed = await appConfirm({
+      title: 'Import Workspace',
+      message: `Import ${data.tasks ? data.tasks.length : 0} tasks and history into FlowDesk? This will replace your current workspace.`,
+      confirmText: 'Import & Replace',
+      cancelText: 'Cancel',
+      danger: true,
+    });
     if (!confirmed) return;
 
     await setState(data);
     await reload();
-    alert('FlowDesk workspace successfully imported!');
+    await appAlert('FlowDesk workspace successfully imported!', 'Import Successful');
   } catch (err) {
-    alert('Failed to import file: ' + err.message);
+    await appAlert('Failed to import file: ' + err.message, 'Import Error');
   } finally {
     event.target.value = '';
   }
@@ -542,14 +548,28 @@ async function onDeleteFromDialog() {
   if (!editingId) return;
   const task = state.tasks.find((t) => t.id === editingId);
   if (!task) return;
-  if (!confirm(`Delete “${task.title}”?`)) return;
+  const ok = await appConfirm({
+    title: 'Delete Task',
+    message: `Are you sure you want to delete “${task.title}”?`,
+    confirmText: 'Delete',
+    cancelText: 'Cancel',
+    danger: true,
+  });
+  if (!ok) return;
   els.dialog.close();
   await deleteTask(editingId);
   await reload();
 }
 
 async function removeTask(task) {
-  if (!confirm(`Delete “${task.title}”?`)) return;
+  const ok = await appConfirm({
+    title: 'Delete Task',
+    message: `Are you sure you want to delete “${task.title}”?`,
+    confirmText: 'Delete',
+    cancelText: 'Cancel',
+    danger: true,
+  });
+  if (!ok) return;
   await deleteTask(task.id);
   await reload();
 }
@@ -557,9 +577,14 @@ async function removeTask(task) {
 async function onClearDone() {
   const done = state.tasks.filter((task) => task.status === 'done').length;
   if (done === 0) return;
-  if (!confirm(`Remove ${done} completed task${done === 1 ? '' : 's'}? History stays intact.`)) {
-    return;
-  }
+  const ok = await appConfirm({
+    title: 'Clear Completed',
+    message: `Remove ${done} completed task${done === 1 ? '' : 's'}? History stays intact.`,
+    confirmText: 'Clear',
+    cancelText: 'Cancel',
+    danger: true,
+  });
+  if (!ok) return;
   await clearCompleted();
   await reload();
 }

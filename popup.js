@@ -8,6 +8,7 @@ import {
   sortTasks,
   formatDue,
   openBoard,
+  appConfirm,
   dateKey,
   shiftDateKey,
   PRIORITY_LABEL,
@@ -309,7 +310,14 @@ function taskRow(task) {
   del.innerHTML =
     '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   del.addEventListener('click', async () => {
-    if (!confirm(`Delete “${task.title}”?`)) return;
+    const ok = await appConfirm({
+      title: 'Delete Task',
+      message: `Are you sure you want to delete “${task.title}”?`,
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      danger: true,
+    });
+    if (!ok) return;
     await deleteTask(task.id);
     await reload();
   });
