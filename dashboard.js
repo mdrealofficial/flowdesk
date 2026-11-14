@@ -1,5 +1,6 @@
 import {
   getState,
+  setState,
   subscribe,
   addTask,
   updateTask,
@@ -33,6 +34,8 @@ const els = {
   sideWeek: $('#side-week'),
   sideBest: $('#side-best'),
   search: $('#search'),
+  exportBtn: $('#export-btn'),
+  importInput: $('#import-input'),
   newTask: $('#new-task'),
   clearDone: $('#clear-done'),
   dialog: $('#task-dialog'),
@@ -99,6 +102,14 @@ function bindEvents() {
     renderBoard();
   });
 
+  if (els.exportBtn) {
+    els.exportBtn.addEventListener('click', onExport);
+  }
+
+  if (els.importInput) {
+    els.importInput.addEventListener('change', onImport);
+  }
+
   els.dialogClose.addEventListener('click', () => els.dialog.close());
   els.dialogCancel.addEventListener('click', () => els.dialog.close());
   els.dialog.addEventListener('click', (event) => {
@@ -109,6 +120,42 @@ function bindEvents() {
   els.deleteBtn.addEventListener('click', onDeleteFromDialog);
 
   els.fProgress.addEventListener('input', updateProgressOutput);
+}
+
+function onExport() {
+  if (!state) return;
+  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state, null, 2));
+  const a = document.createElement('a');
+  a.setAttribute('href', dataStr);
+  a.setAttribute('download', `flowdesk-backup-${dateKey()}.json`);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+async function onImport(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!data || (!Array.isArray(data.tasks) && typeof data.history !== 'object')) {
+      throw new Error('Invalid FlowDesk backup file format.');
+    }
+    const confirmed = confirm(
+      `Import ${data.tasks ? data.tasks.length : 0} tasks and history into FlowDesk? This will replace your current workspace.`
+    );
+    if (!confirmed) return;
+
+    await setState(data);
+    await reload();
+    alert('FlowDesk workspace successfully imported!');
+  } catch (err) {
+    alert('Failed to import file: ' + err.message);
+  } finally {
+    event.target.value = '';
+  }
 }
 
 /* ------------------------------------------------------------------ */

@@ -60,6 +60,11 @@ body {
   gap: 10px;
 }
 
+.import-label {
+  cursor: pointer;
+  user-select: none;
+}
+
 .search {
   display: flex;
   align-items: center;

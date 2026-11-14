@@ -8,6 +8,8 @@ import {
   sortTasks,
   formatDue,
   openBoard,
+  dateKey,
+  shiftDateKey,
   PRIORITY_LABEL,
   REPEAT_LABEL,
 } from './lib/store.js';
@@ -30,6 +32,7 @@ const els = {
   list: $('#task-list'),
   footerNote: $('#footer-note'),
   filters: $('#filters'),
+  duePresets: $('#due-presets'),
   toggleQuickAdd: $('#toggle-quick-add'),
   openBoard: $('#open-board'),
   openBoard2: $('#open-board-2'),
@@ -59,6 +62,15 @@ async function reload() {
 function bindEvents() {
   els.form.addEventListener('submit', onAddTask);
 
+  if (els.duePresets) {
+    els.duePresets.addEventListener('click', (event) => {
+      const chip = event.target.closest('.preset-chip');
+      if (!chip) return;
+      const offset = Number(chip.dataset.offset) || 0;
+      els.due.value = shiftDateKey(dateKey(), offset);
+    });
+  }
+
   if (els.toggleQuickAdd) {
     els.toggleQuickAdd.addEventListener('click', () => {
       const isCollapsed = els.form.classList.toggle('is-collapsed');
@@ -69,6 +81,16 @@ function bindEvents() {
       }
     });
   }
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !els.form.classList.contains('is-collapsed')) {
+      els.form.classList.add('is-collapsed');
+      if (els.toggleQuickAdd) {
+        els.toggleQuickAdd.classList.remove('is-active');
+        els.toggleQuickAdd.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
 
   els.filters.addEventListener('click', (event) => {
     const chip = event.target.closest('[data-filter]');
@@ -102,7 +124,11 @@ async function onAddTask(event) {
     els.form.reset();
     els.priority.value = 'medium';
     els.repeat.value = 'none';
-    els.title.focus();
+    els.form.classList.add('is-collapsed');
+    if (els.toggleQuickAdd) {
+      els.toggleQuickAdd.classList.remove('is-active');
+      els.toggleQuickAdd.setAttribute('aria-expanded', 'false');
+    }
     await reload();
   } catch (error) {
     console.error('[FlowDesk] failed to add task', error);
@@ -169,11 +195,24 @@ function emptyState() {
   if (filter === 'done') {
     text.innerHTML = 'No completed tasks yet.<br /><strong>Finish one to get started.</strong>';
   } else if (filter === 'active') {
-    text.innerHTML = 'Nothing in the pipeline.<br /><strong>Add your next move above.</strong>';
+    text.innerHTML = 'Nothing in the pipeline.<br /><button type="button" class="link-btn empty-action">Add task +</button>';
   } else {
-    text.innerHTML = 'Your board is empty.<br /><strong>Capture your first task above.</strong>';
+    text.innerHTML = 'Your board is empty.<br /><button type="button" class="link-btn empty-action">Capture your first task +</button>';
   }
   wrap.append(text);
+
+  const action = wrap.querySelector('.empty-action');
+  if (action) {
+    action.addEventListener('click', () => {
+      els.form.classList.remove('is-collapsed');
+      if (els.toggleQuickAdd) {
+        els.toggleQuickAdd.classList.add('is-active');
+        els.toggleQuickAdd.setAttribute('aria-expanded', 'true');
+      }
+      els.title.focus();
+    });
+  }
+
   return wrap;
 }
 
