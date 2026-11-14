@@ -486,8 +486,8 @@ body {
 
 .consistency-body {
   display: flex;
-  gap: 22px;
-  align-items: stretch;
+  gap: 24px;
+  align-items: center;
 }
 
 .heatmap-wrap {
@@ -542,14 +542,14 @@ body {
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(7, 13px);
-  grid-auto-columns: 13px;
+  grid-auto-columns: minmax(11px, 1fr);
   gap: 3px;
-  width: max-content;
+  width: 100%;
 }
 
 .heat-cell {
-  width: 13px;
-  height: 13px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 3px;
   background: #eceae4;
   transition: transform 0.1s ease, box-shadow 0.1s ease;

@@ -416,7 +416,7 @@ function renderHeatmap() {
   const today = new Date();
   const todayStr = dateKey(today);
 
-  const numWeeks = 26;
+  const numWeeks = 52;
   const start = new Date(today);
   start.setDate(start.getDate() - (today.getDay() + (numWeeks - 1) * 7));
   start.setHours(0, 0, 0, 0);
@@ -433,7 +433,7 @@ function renderHeatmap() {
     if (m !== lastMonth) {
       monthLabels.push({
         text: weekStart.toLocaleDateString(undefined, { month: 'short' }),
-        col: w,
+        pct: (w / numWeeks) * 100,
       });
       lastMonth = m;
     }
@@ -458,12 +458,11 @@ function renderHeatmap() {
 
   if (els.heatmapMonths) {
     els.heatmapMonths.replaceChildren();
-    // Grid column width is 13px + 3px gap = 16px
     for (const item of monthLabels) {
       const span = document.createElement('span');
       span.textContent = item.text;
       span.style.position = 'absolute';
-      span.style.left = `${item.col * 16}px`;
+      span.style.left = `${item.pct}%`;
       els.heatmapMonths.append(span);
     }
   }
