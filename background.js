@@ -3,7 +3,7 @@
  * Keeps the toolbar badge in sync with the number of open tasks.
  */
 const STORAGE_KEY = 'flowdesk:state:v1';
-const BADGE_COLOR = '#7c8cff';
+const BADGE_COLOR = '#88c009';
 
 async function refreshBadge() {
   try {

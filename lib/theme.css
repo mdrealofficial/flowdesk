@@ -10,9 +10,10 @@
   --text: #1c1b18;
   --text-dim: #4f4c45;
   --muted: #848078;
-  --accent: #2f5d8c;
-  --accent-2: #244a70;
-  --accent-soft: #e7eef6;
+  --accent: #c3f53c;
+  --accent-2: #addf2e;
+  --accent-soft: #f1fcd4;
+  --accent-text: #182205;
   --green: #2f7a5c;
   --green-soft: #e6f0ea;
   --amber: #a9761b;
@@ -141,7 +142,7 @@ select {
   justify-content: center;
   gap: 6px;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-text);
   font-weight: 600;
   padding: 8px 14px;
   border-radius: var(--radius-sm);

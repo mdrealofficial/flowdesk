@@ -38,7 +38,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  color: #ffffff;
+  color: var(--accent-text);
   background: var(--accent);
 }
 
@@ -469,19 +469,19 @@ body {
 }
 
 .lvl-1 {
-  background: #dce7f0;
+  background: #f1fcd4;
 }
 
 .lvl-2 {
-  background: #b7cede;
+  background: #dcf885;
 }
 
 .lvl-3 {
-  background: #7ba2c1;
+  background: #c3f53c;
 }
 
 .lvl-4 {
-  background: #2f5d8c;
+  background: #88c009;
 }
 
 .consistency-body {
@@ -566,19 +566,19 @@ body {
 }
 
 .heat-cell.lvl-1 {
-  background: #dce7f0;
+  background: #f1fcd4;
 }
 
 .heat-cell.lvl-2 {
-  background: #b7cede;
+  background: #dcf885;
 }
 
 .heat-cell.lvl-3 {
-  background: #7ba2c1;
+  background: #c3f53c;
 }
 
 .heat-cell.lvl-4 {
-  background: #2f5d8c;
+  background: #88c009;
 }
 
 .heat-scale {
