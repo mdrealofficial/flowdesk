@@ -620,14 +620,6 @@ body {
   color: var(--green);
 }
 
-.side-stat:nth-child(3) .side-value {
-  color: var(--accent);
-}
-
-.side-stat:nth-child(4) .side-value {
-  color: var(--text-dim);
-}
-
 .side-label {
   font-size: 11px;
   color: var(--muted);

@@ -33,7 +33,6 @@ const els = {
   sideStreak: $('#side-streak'),
   sideStreakLabel: $('#side-streak-label'),
   sideWeek: $('#side-week'),
-  sideTotalPeriod: $('#side-total-period'),
   sideBest: $('#side-best'),
   search: $('#search'),
   exportBtn: $('#export-btn'),
@@ -180,9 +179,6 @@ function render() {
   els.sideStreak.textContent = String(stats.streak);
   els.sideStreakLabel.textContent = stats.streak === 1 ? 'day in streak' : 'days in streak';
   els.sideWeek.textContent = String(stats.weekTotal);
-  if (els.sideTotalPeriod) {
-    els.sideTotalPeriod.textContent = String(stats.lifetime);
-  }
   els.sideBest.textContent = String(bestDay(state.history));
 
   renderBoard();
